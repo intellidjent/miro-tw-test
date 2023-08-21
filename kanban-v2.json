@@ -1,0 +1,632 @@
+{
+  "openapi": "3.1.0",
+  "servers" : [
+      {
+         "url" : "https://api.miro.com/v2"
+      }
+  ],
+  "info": {
+    "title": "Kanban API",
+    "description" : "Kanban API enables developers to create, manage, and optimize Kanban boards with self-contained items that consist of movable cards and customizable columns.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/boards/{board_id}/kanbans": {
+      "post": {
+        "summary": "Create Kanban item",
+        "description" : "Adds a Kanban item to the board.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "board_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the board where you want to create the Kanban item."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKanbanItem"
+              },
+              "example": {
+                "title": "Kanban item",
+                "position": {
+                  "x": 100,
+                  "y": 100
+                },
+                "columns": [
+                  {
+                    "name": "To Do",
+                    "cards": [
+                      {
+                        "title": "Task 1. Create API docs for Kanban API",
+                        "assignee": "Ruslan Kotowski",
+                        "due_date": "2023-08-31 12:00:00+00.00"
+                      },
+                      {
+                        "title": "Task 2. Create examples for Kanban API",
+                        "assignee": "Ruslan Kotowski",
+                        "due_date": "2023-09-15 15:30:00+00.00"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "In Progress"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Kanban item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KanbanItem"
+                },
+                "example": {
+                  "id": "3458764517517819000",
+                  "title": "Kanban item",
+                  "position": {
+                    "x": 100,
+                    "y": 100
+                  },
+                  "columns": [
+                    {
+                      "name": "To Do",
+                      "cards": [
+                        {
+                          "title": "Task 1. Create API docs for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-08-31 12:00:00+00.00"
+                        },
+                        {
+                          "title": "Task 2. Create examples for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-09-15 15:30:00+00.00"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "In Progress"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "malformedRequest": {
+                    "$ref": "#/components/examples/RestError400"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "tooManyRequests": {
+                    "$ref": "#/components/examples/RestError429"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/boards/{board_id}/kanbans/{item_id}": {
+      "get": {
+        "summary": "Get Kanban item",
+        "description" : "Retrieves information for a specific Kanban item on a board.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "board_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the board from which you want to retrieve a specific item."
+          },
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the Kanban item that you want to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Kanban item retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KanbanItem"
+                },
+                "example": {
+                  "id": "3458764517517819000",
+                  "title": "Kanban item",
+                  "position": {
+                    "x": 100,
+                    "y": 100
+                  },
+                  "columns": [
+                    {
+                      "name": "To Do",
+                      "cards": [
+                        {
+                          "title": "Task 1. Create API docs for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-08-31 12:00:00+00.00"
+                        },
+                        {
+                          "title": "Task 2. Create examples for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-09-15 15:30:00+00.00"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "In Progress"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "notFound": {
+                    "$ref": "#/components/examples/RestError404"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "tooManyRequests": {
+                    "$ref": "#/components/examples/RestError429"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Kanban item",
+        "description" : "Updates a Kanban item on a board based on the data and style properties provided in the request body.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "board_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the board where you want to update the Kanban item."
+          },
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the Kanban item you want to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKanbanItem"
+              },
+              "example": {
+                "title": "Kanban item",
+                "position": {
+                  "x": 100,
+                  "y": 100
+                },
+                "columns": [
+                  {
+                    "name": "To Do",
+                    "cards": [
+                      {
+                        "title": "Task 1. Create API docs for Kanban API",
+                        "assignee": "Ruslan Kotowski",
+                        "due_date": "2023-08-31 12:00:00+00.00"
+                      },
+                      {
+                        "title": "Task 2. Create examples for Kanban API",
+                        "assignee": "Ruslan Kotowski",
+                        "due_date": "2023-09-15 15:30:00+00.00"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "In Progress",
+                    "cards": [
+                      {
+                        "title": "Task 3. Create overview for Kanban API",
+                        "assignee": "Ruslan Kotowski",
+                        "due_date": "2023-08-25 12:00:00+00.00"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Kanban item updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KanbanItem"
+                },
+                "example": {
+                  "id": "3458764517517819000",
+                  "title": "Kanban item",
+                  "position": {
+                    "x": 100,
+                    "y": 100
+                  },
+                  "columns": [
+                    {
+                      "name": "To Do",
+                      "cards": [
+                        {
+                          "title": "Task 1. Create API docs for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-08-31 12:00:00+00.00"
+                        },
+                        {
+                          "title": "Task 2. Create examples for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-09-15 15:30:00+00.00"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "In Progress",
+                      "cards": [
+                        {
+                          "title": "Task 3. Create overview for Kanban API",
+                          "assignee": "Ruslan Kotowski",
+                          "due_date": "2023-08-25 12:00:00+00.00"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "malformedRequest": {
+                    "$ref": "#/components/examples/RestError400"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "tooManyRequests": {
+                    "$ref": "#/components/examples/RestError429"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Kanban item",
+        "description" : "Deletes a Kanban item from the board.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "board_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the board from which you want to delete a Kanban item."
+          },
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier (ID) of the Kanban item you want to delete."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Kanban item deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "notFound": {
+                    "$ref": "#/components/examples/RestError404"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "tooManyRequests": {
+                    "$ref": "#/components/examples/RestError429"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateKanbanItem": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "The title of the item."
+          },
+          "position": {
+            "type": "object",
+            "description": "Contains information about the item's position on the Kanban board, such as its `x` and `y` coordinates.",
+            "properties": {
+              "x": {
+                "type": "number",
+                "format" : "double",
+                "description": "X-axis coordinate of the location of the item on the Kanban board."
+              },
+              "y": {
+                "type": "number",
+                "format" : "double",
+                "description": "Y-axis coordinate of the location of the item on the Kanban board."
+              }
+            }
+          },
+          "columns": {
+            "type": "array",
+            "description": "Contains information about the column(s), such as its `name` and `cards` on the Kanban board.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the column on the Kanban board."
+                },
+                "cards": {
+                  "type": "array",
+                  "description": "Contains information about the card(s), such as its `title`, `assignee`, and `due_date`.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The title of the card on the Kanban board."
+                      },
+                      "assignee": {
+                        "type": "string",
+                        "description": "The name of the user who is assigned to the task."
+                      },
+                      "due_date": {
+                        "type": "string",
+                        "format" : "date-time",
+                        "description": "The date when the task or activity described in the card is due to be completed. Format: UTC, adheres to [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601), includes a [trailing Z offset](https://en.wikipedia.org/wiki/ISO_8601#Coordinated_Universal_Time_(UTC))."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "KanbanItem": {
+        "type": "object",
+        "required" : [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier (ID) of an item."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the item."
+          },
+          "position": {
+            "type": "object",
+            "description": "Contains information about the item's position on the Kanban board, such as its `x` and `y` coordinates.",
+            "properties": {
+              "x": {
+                "type": "number",
+                "format" : "double",
+                "description": "X-axis coordinate of the location of the item on the Kanban board."
+              },
+              "y": {
+                "type": "number",
+                "format" : "double",
+                "description": "Y-axis coordinate of the location of the item on the Kanban board."
+              }
+            }
+          },
+          "columns": {
+            "type": "array",
+            "description": "Contains information about the column(s), such as its `name` and `cards` on the Kanban board.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the column on the Kanban board."
+                },
+                "cards": {
+                  "type": "array",
+                  "description": "Contains information about the card(s), such as its `title`, `assignee`, and `due_date`.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string",
+                        "description": "The title of the card on the Kanban board."
+                      },
+                      "assignee": {
+                        "type": "string",
+                        "description": "The name of the user who is assigned to the task."
+                      },
+                      "due_date": {
+                        "type": "string",
+                        "format" : "date-time",
+                        "description": "The date when the task or activity described in the card is due to be completed. Format: UTC, adheres to [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601), includes a [trailing Z offset](https://en.wikipedia.org/wiki/ISO_8601#Coordinated_Universal_Time_(UTC))."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "properties" : {
+          "code" : {
+            "description" : "Code of the error.",
+            "type" : "string"
+          },
+          "message" : {
+            "description" : "Description of the error.",
+            "type" : "string"
+          },
+          "status" : {
+            "description" : "Status code of the error.",
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "type" : {
+            "description" : "Type of the error.",
+            "type" : "string"
+          }
+        },
+        "required" : [
+           "code",
+           "message",
+           "status",
+           "type"
+        ],
+        "type" : "object"
+      }
+    },
+    "examples": {
+      "RestError400": {
+        "value": {
+          "code": "error",
+          "message": "Error message",
+          "status": 400,
+          "type": "error"
+        }
+      },
+      "RestError404": {
+        "value": {
+          "code": "error",
+          "message": "Error message",
+          "status": 404,
+          "type": "error"
+        }
+      },
+      "RestError429": {
+        "value": {
+          "code": "error",
+          "message": "Error message",
+          "status": 429,
+          "type": "error"
+        }
+      }
+    }
+  }
+}
