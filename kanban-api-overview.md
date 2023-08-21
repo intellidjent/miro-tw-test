@@ -2,7 +2,7 @@
 
 ## What is Kanban API?
 
-Our new [Kanban API](link-to-api-reference) is a powerful tool empowering developers to seamlessly integrate Kanban boards directly into Miro boards. With this API, developers can create, manage, and optimize Kanban boards with self-contained items that consist of customizable columns and movable cards. These items provide an interactive and visual approach to tracking tasks and their workflow stages, enhancing workflow efficiency and collaboration within Miro.
+Our new Kanban API is a powerful tool empowering developers to seamlessly integrate Kanban boards directly into Miro boards. With this API, developers can create, manage, and optimize Kanban boards with self-contained items that consist of customizable columns and movable cards. These items provide an interactive and visual approach to tracking tasks and their workflow stages, enhancing workflow efficiency and collaboration within Miro.
 
 ## When do I need Kanban API?
 
@@ -18,14 +18,14 @@ Introducing Kanban API in REST API 2.0
 
 ### What's new
 
-Introducing [Kanban API](link-to-kanban-api-overview) to enable programmatic creation, management, and optimization of Kanban items within Miro boards. This API enhances project management capabilities within Miro by integrating a visual and interactive Kanban workflow.
+Introducing Kanban API to enable programmatic creation, management, and optimization of Kanban items within Miro boards. This API enhances project management capabilities within Miro by integrating a visual and interactive Kanban workflow.
 
 - POST endpoint for creating new Kanban items, specifying title, position, and columns.
 - GET endpoint to retrieve detailed information about a Kanban item, including title, position, and columns.
 - PUT endpoint for updating existing Kanban items, allowing modification of title, position, and columns.
 - DELETE endpoint for removing Kanban items from the Miro board.
 
-For more information, see [Kanban API](link-to-api-reference).
+For more information, see [Kanban API](kanban-v2.json).
 
 ---
 
