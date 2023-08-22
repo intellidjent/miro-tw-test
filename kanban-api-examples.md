@@ -9,8 +9,8 @@ curl --request POST \
 {
   "title": "Kanban item",
   "position": {
-    "x": 5.0,
-    "y": 10.0
+    "x": 100,
+    "y": 100
   },
   "columns": [
     {
@@ -55,8 +55,8 @@ curl --request PUT \
 {
   "title": "Kanban item",
   "position": {
-    "x": 5.0,
-    "y": 10.0
+    "x": 100,
+    "y": 100
   },
   "columns": [
     {
